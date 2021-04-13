@@ -43,13 +43,15 @@
 						id: $("#id").val(),
 						pwd: $("#pwd").val()
 					}//data
-					, function(data){
-						console.log("???");
-						console.log(data.result);
-						console.log(data.msg);
-					}//function
-					);
-				
+					, function(data, status){
+						if(data.result == 'success'){
+							window.location.reload();
+						}else {//fail
+							$("#id").text("");
+							$("#pwd").text("");
+							$("#fail_msg").html("<p style='color:red'>"+data.msg+"</p>");
+						}
+					});//function
 				
 			});
 		});
@@ -242,7 +244,7 @@
             </button>
             <h3 ><b>로그인</b></h3>
           </div>
-          <form id="login_form" action="<%=request.getContextPath() %>/login2" method="post">
+          <form id="login_form" action="<%=request.getContextPath() %>/login" method="post">
           <div class="modal-body mx-3">
             <div class="md-form mb-5" style="margin:10px;">
               <input type="text" id="id" name="id" placeholder="아이디" class="form-control validate">
@@ -250,7 +252,7 @@
             <div class="md-form mb-5" style="margin:10px;">
               <input type="text" id="pwd" name="pwd" placeholder="패스워드" class="form-control validate">
             </div>
-            <div id="msg"></div>
+            <div id="fail_msg"></div>
           </div>
           <div  style="float:right;" class="modal-footer d-flex justify-content-center">
             <input type="button" id="login_btn" value="login" class="btn btn-primary btn-icon-split"/> <i class="fa fa-paper-plane-o ml-1"></i>

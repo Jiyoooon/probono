@@ -16,6 +16,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public String ServerException(Exception e, Model model) {
 		model.addAttribute("error", "Server Error");
+		e.printStackTrace();
 		return "error/error";
 	}
 	
