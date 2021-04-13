@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -30,14 +32,37 @@
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+      <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+      
+      <script type="text/javascript">
+		$(document).ready(function() {
+			$("#login_btn").click(function() {
+				
+				$.post($("#login_form").attr('action')//url
+					, {
+						id: $("#id").val(),
+						pwd: $("#pwd").val()
+					}//data
+					, function(data){
+						console.log("???");
+						console.log(data.result);
+						console.log(data.msg);
+					}//function
+					);
+				
+				
+			});
+		});
+		</script>
    </head>
    <!-- body -->
    <body class="main-layout">
       <!-- loader  -->
-      <div class="loader_bg">
+<%--       <div class="loader_bg">
          <div class="loader"><img src="<%=request.getContextPath() %>/resources/images/loading.gif" alt="#" /></div>
       </div>
-      <!-- end loader -->
+ --%>      <!-- end loader -->
+	
       <!-- header -->
       <header>
          <!-- header inner -->
@@ -49,7 +74,7 @@
                         <div class="full">
                            <div class="center-desk">
                               <div class="logo">
-                                 <a href="index.jsp"><img src="<%=request.getContextPath() %>/resources/images/logo.png" alt="#" /></a>
+                                 <a href="<%=request.getContextPath() %>/"><img src="<%=request.getContextPath() %>/resources/images/logo.png" alt="#" /></a>
                               </div>
                            </div>
                         </div>
@@ -65,7 +90,7 @@
                                     <a class="nav-link" href="index.html"> 홈  </a>
                                  </li>-->
                                  <li class="nav-item">
-                                    <a class="nav-link" href="index.jsp"> 홈  </a>
+                                    <a class="nav-link" href="<%=request.getContextPath() %>/"> 홈  </a>
                                  </li>
                                  <li class="nav-item">
                                     <a class="nav-link" href="#">계좌조회</a>
@@ -75,7 +100,14 @@
                                  </li>
                               
                                  <li class="nav-item d_none le_co">
-                                    <a class="nav-link" href="#"data-toggle="modal" data-target="#modalSubscriptionForm"><i  class="fa fa-user" aria-hidden="true"></i> Login</a>
+                                 	<c:choose>
+                                 	  <c:when test="${member == null }">
+                                 	  	<a class="nav-link" href="#" data-toggle="modal" data-target="#modalSubscriptionForm"><i  class="fa fa-user" aria-hidden="true"></i> Login</a>
+                                 	  </c:when>
+                                 	  <c:when test="${member != null }">
+                                 	  	<a class="nav-link" href="logout" data-target="#modalSubscriptionForm"><i  class="fa fa-user" aria-hidden="true"></i> Logout</a>
+                                 	  </c:when>
+                                 	</c:choose>
                                  </li>
                                  <li class="nav-item d_none le_co">
                                     <a class="nav-link" href="#"><i  class="fa fa-search" aria-hidden="true"></i></a>
@@ -153,81 +185,7 @@
       </header>
       <!-- end banner -->
       <!-- about section -->
-    <!-- <div class="about">
-         <div class="container">
-            <div class="row d_flex">
-               <div class="col-md-12 col-lg-5">
-                  <div class="about_img">
-                     <figure><img src="images/about.png" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-12 col-lg-7">
-                  <div class="titlepage">
-                     <h2> <span class="yellow">ABOUT US</span><br>Welcome TO OUR DEGITALEX</h2>
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco </p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>-->
-      <!-- about section -->
-      <!-- services section --> 
-     <!-- <div class="services">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2> <span class="yellow">Services</span><br>consectetur adipiscing elit</h2>
-                  </div>
-               </div>
-               <div class="col-md-3 col-sm-6">
-                  <div id="ho_color" class="services_main">
-                     <i><img src="images/services_icon1.png" alt="#"/></i>
-                     <img class="ho" src="images/services_icon1h.png" alt="#"/>
-                     <h3>Safe & Secure</h3>
-                     <p>ncididunt ut labore et dolore 
-                        magna aliqua. Ut enim
-                     </p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-               <div class="col-md-3 col-sm-6">
-                  <div id="ho_color" class="services_main">
-                     <i><img src="images/services_icon2.png" alt="#"/></i>
-                     <img class="ho" src="images/services_icon2h.png" alt="#"/>
-                     <h3>Mobile Apps</h3>
-                     <p>ncididunt ut labore et dolore 
-                        magna aliqua. Ut enim
-                     </p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-               <div class="col-md-3 col-sm-6">
-                  <div id="ho_color" class="services_main">
-                     <i><img src="images/services_icon3.png" alt="#"/></i>
-                     <img class="ho" src="images/services_icon3h.png" alt="#"/>
-                     <h3>Wallet</h3>
-                     <p>ncididunt ut labore et dolore 
-                        magna aliqua. Ut enim
-                     </p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-               <div class="col-md-3 col-sm-6">
-                  <div id="ho_color" class="services_main">
-                     <i><img src="images/services_icon4.png" alt="#"/></i>
-                     <img class="ho" src="images/services_icon4h.png" alt="#"/>
-                     <h3>Experts Support</h3>
-                     <p>ncididunt ut labore et dolore 
-                        magna aliqua. Ut enim
-                     </p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>-->
+    
       <!-- end services section -->
       <!-- bitcoins section --> 
       <div class="bitcoins">
@@ -270,154 +228,7 @@
       </div>
       <!-- end wallet section -->
       <!-- Subscribe section --> 
-     <!-- <div class="subscribe">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-8 offset-md-2">
-                  <div class="subscribe_main">
-                     <h3>Subscribe to our newsletter</h3>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, </p>
-                     <form class="news_form">
-                        <input class="enter_form" placeholder="Enter your email" type="text" name="Enter your email">
-                        <button class="subscribe_btn">subscribe now</button>
-                     </form>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>-->
-      <!-- end Subscribe section -->
-      <!-- testimonial -->
-      <!--<div  class="testimonial">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12 ">
-                  <div class="titlepage">
-                     <h2> <span class="yellow">Testimonial</span><br>What is says our clients</h2>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div id="testimoni" class="carousel slide testimonial_Carousel " data-ride="carousel">
-            <ol class="carousel-indicators">
-               <li data-target="#testimoni" data-slide-to="0" class="active"></li>
-               <li data-target="#testimoni" data-slide-to="1"></li>
-               <li data-target="#testimoni" data-slide-to="2"></li>
-               <li data-target="#testimoni" data-slide-to="3"></li>
-            </ol>
-            <div class="carousel-inner">
-               <div class="carousel-item active">
-                  <div class="container">
-                     <div class="carousel-caption ">
-                        <div class="row">
-                           <div class="col-md-10 offset-md-1">
-                              <div class="test_box">
-                                 <i><img src="images/test.png"></i>
-                                 <h3>distracted by</h3>
-                                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,  </p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item">
-                  <div class="container">
-                     <div class="carousel-caption">
-                        <div class="row">
-                           <div class="col-md-10 offset-md-1">
-                              <div class="test_box">
-                                 <i><img src="images/test.png"></i>
-                                 <h3>distracted by</h3>
-                                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,  </p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item">
-                  <div class="container">
-                     <div class="carousel-caption">
-                        <div class="row">
-                           <div class="col-md-10 offset-md-1">
-                              <div class="test_box">
-                                 <i><img src="images/test.png"></i>
-                                 <h3>distracted by</h3>
-                                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,  </p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item">
-                  <div class="container">
-                     <div class="carousel-caption">
-                        <div class="row">
-                           <div class="col-md-10 offset-md-1">
-                              <div class="test_box">
-                                 <i><img src="images/test.png"></i>
-                                 <h3>distracted by</h3>
-                                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,  </p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <a class="carousel-control-prev" href="#testimoni" role="button" data-slide="prev">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i>
-            </a>
-            <a class="carousel-control-next" href="#testimoni" role="button" data-slide="next">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </a>
-         </div>
-      </div>-->
-      <!-- end testimonial section -->
-      <!-- comments  section
-      <div class="contact ">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2> <span class="yellow">Contact Us</span><br> Reqesute a call back</h2>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-10 offset-md-1">
-                  <form id="contac_form" class="contac_form">
-                     <div class="row">
-                        <div class="col-md-12 ">
-                           <input class="contac_control" placeholder=" Name" type="type" name="Name"> 
-                        </div>
-                        <div class="col-md-12">
-                           <input class="contac_control" placeholder="Phone Number  " type="type" name="Phone Number  ">                          
-                        </div>
-                        <div class="col-md-12">
-                           <input class="contac_control" placeholder="Email Address" type="type" name="Email Address">                          
-                        </div>
-                        <div class="col-md-12">
-                           <textarea class="textarea" placeholder="Message" type="type" Message="Name">Message </textarea>
-                        </div>
-                        <div class="col-md-12">
-                           <button class="send_btn">Send</button>
-                        </div>
-                     </div>
-                  </form>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="map">
-                     <figure><img src="images/map-(1).png" alt="#"/></figure>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div> -->
+   
       <!-- end contact  section -->
       <!--  footer -->
 
@@ -431,18 +242,18 @@
             </button>
             <h3 ><b>로그인</b></h3>
           </div>
-          <form action="" method="post">
+          <form id="login_form" action="<%=request.getContextPath() %>/login2" method="post">
           <div class="modal-body mx-3">
             <div class="md-form mb-5" style="margin:10px;">
-              <input type="text" name="id" placeholder="아이디" class="form-control validate">
+              <input type="text" id="id" name="id" placeholder="아이디" class="form-control validate">
             </div>
             <div class="md-form mb-5" style="margin:10px;">
-              <input type="text" name="pwd" placeholder="패스워드" class="form-control validate">
+              <input type="text" id="pwd" name="pwd" placeholder="패스워드" class="form-control validate">
             </div>
-           <hr>
+            <div id="msg"></div>
           </div>
           <div  style="float:right;" class="modal-footer d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary btn-icon-split">제출 <i class="fa fa-paper-plane-o ml-1"></i></submit>
+            <input type="button" id="login_btn" value="login" class="btn btn-primary btn-icon-split"/> <i class="fa fa-paper-plane-o ml-1"></i>
           </div> 
           </form>
         </div>
