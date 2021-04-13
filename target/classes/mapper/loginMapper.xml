@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 파일은 SQL문을 작성할 파일이 된다. -->
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="loginMapper"><!-- SQL문을 작성한 매퍼(현파일)와 namespace로 등록한 인터페이스를 연동한다는 뜻-->
+
+	<!-- 로그인 --> 
+	<select id="login" resultType="kr.ac.kopo.vo.LoginVO">
+		SELECT USERID, USERPASS
+		FROM MP_MEMBER
+		WHERE USERID = #{userId}
+		AND USERPASS = #{userPass}	
+	</select>
+
+</mapper>
